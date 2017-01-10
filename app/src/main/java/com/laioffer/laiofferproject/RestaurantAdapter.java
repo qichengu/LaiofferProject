@@ -1,10 +1,14 @@
 package com.laioffer.laiofferproject;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -45,6 +49,14 @@ public class RestaurantAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_restaurant_list_item,
                     parent, false);
         }
+
+        ImageView restaurantPhoto = (ImageView) convertView.findViewById(R.id.restaurant_thumbnail);
+        restaurantPhoto.setBackgroundColor(256*256*256/10*position);
+        Resources res = context.getResources();
+        String mDrawableName = "restaurant_thumbnail" + ".png";
+        Log.e("Image name test", "restaurant_thumbnail" + position+ ".png");
+        int resID = res.getIdentifier(mDrawableName , "drawable", context.getPackageName());
+        restaurantPhoto.setImageResource(resID);
 
         TextView restaurantName = (TextView) convertView.findViewById(
                 R.id.restaurant_name);
