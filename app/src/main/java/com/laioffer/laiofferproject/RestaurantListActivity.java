@@ -1,28 +1,42 @@
 package com.laioffer.laiofferproject;
 
+import android.content.res.Configuration;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener
+{
+
+    RestaurantListFragment listFragment;
+    RestaurantGridFragment gridFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
-        Log.e("Life cycle test", "We are at onCreate()");
 
-        // Get ListView object from xml.
-        ListView restaurantListView = (ListView) findViewById(R.id.restaurant_list);
 
-        // Initialize an adapter.
-        RestaurantAdapter adapter = new RestaurantAdapter(this);
+        //add list view
+        if (isTablet()) {
+            listFragment = new RestaurantListFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_list_container, listFragment).commit();
+        }
 
-        // Assign adapter to ListView.
-        restaurantListView.setAdapter(adapter);
-
+        //add Gridview
+        gridFragment = new RestaurantGridFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_grid_container, gridFragment).commit();
     }
+
+    private boolean isTablet() {
+        return (getApplicationContext().getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
 
     @Override
     protected void onStart() {
@@ -52,6 +66,11 @@ public class RestaurantListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e("Life cycle test", "We are at onDestroy()");
+    }
+
+    @Override
+    public void onItemSelected(int position){
+        gridFragment.onItemSelected(position);
     }
 }
 
