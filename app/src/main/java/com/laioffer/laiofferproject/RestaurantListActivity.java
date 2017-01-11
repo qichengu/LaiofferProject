@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener
+public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener, RestaurantGridFragment.OnItemSelectListener
 {
 
     RestaurantListFragment listFragment;
@@ -69,8 +69,13 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
     }
 
     @Override
-    public void onItemSelected(int position){
+    public void onItemSelectedList(int position){
         gridFragment.onItemSelected(position);
+    }
+
+    @Override
+    public void onItemSelectedGrid(int position){
+        listFragment.onItemSelected(position);
     }
 }
 

@@ -2,6 +2,7 @@ package com.laioffer.laiofferproject;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import android.widget.ListView;
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment {
-
+    ListView listView;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -26,7 +27,7 @@ public class RestaurantListFragment extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnItemSelectListener {
-        public void onItemSelected(int position);
+        public void onItemSelectedList(int position);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class RestaurantListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.restaurant_list);
+        listView = (ListView) view.findViewById(R.id.restaurant_list);
         listView.setAdapter(new RestaurantAdapter(getActivity()));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
@@ -55,7 +56,14 @@ public class RestaurantListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mCallback.onItemSelected(i);
+                for(int idx = 0; idx < listView.getChildCount(); idx++){
+                    if (i == idx) {
+                        listView.getChildAt(idx).setBackgroundColor(Color.BLUE);
+                    } else {
+                        listView.getChildAt(idx).setBackgroundColor(Color.parseColor("#EEEEEE"));
+                    }
+                }
+                mCallback.onItemSelectedList(i);
             }
         });
 
@@ -71,6 +79,14 @@ public class RestaurantListFragment extends Fragment {
                 "Restaurant10"};
         return names;
     }
-
+    public void onItemSelected(int position){
+        for(int i = 0; i < listView.getChildCount(); i++){
+            if (position == i) {
+                listView.getChildAt(i).setBackgroundColor(Color.BLUE);
+            } else {
+                listView.getChildAt(i).setBackgroundColor(Color.parseColor("#EEEEEE"));
+            }
+        }
+    }
 
 }
