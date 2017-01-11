@@ -2,6 +2,7 @@ package com.laioffer.laiofferproject;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,34 +52,11 @@ public class RestaurantAdapter extends BaseAdapter {
         }
 
         ImageView restaurantPhoto = (ImageView) convertView.findViewById(R.id.restaurant_thumbnail);
-        restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail0);
-        switch (position % 10) {
-            case 0: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail0); break;
-            case 1: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail1); break;
-            case 2: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail2); break;
-            case 3: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail3); break;
-            case 4: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail4); break;
-            case 5: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail5); break;
-            case 6: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail6); break;
-            case 7: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail7); break;
-            case 8: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail8); break;
-            case 9: restaurantPhoto.setImageResource(R.drawable.restaurant_thumbnail9); break;
-        }
-        /*Resources res = getResources();
-        String mDrawableName = "logo_default";
-        int resID = res.getIdentifier(mDrawableName , "drawable", getPackageName());
-        Drawable drawable = res.getDrawable(resID );
-        icon.setImageDrawable(drawable );
-        */
+        restaurantPhoto.setBackgroundColor(Color.rgb(256/10*position, 0, 0));
+        Resources res = context.getResources();
+        int resID = res.getIdentifier("restaurant_thumbnail" + position , "drawable", context.getPackageName());
+        restaurantPhoto.setImageResource(resID);
 
-        //restaurantPhoto.setBackgroundColor(256*256*256/10*position);
-        /*Resources res = context.getResources();
-        String mDrawableName = "p1.png";
-        Log.e("Image name test", "restaurant_thumbnail" + position+ ".png");
-        int resID = res.getIdentifier(mDrawableName , "drawable", context.getPackageName());
-        Drawable drawable = res.getDrawable(resID);
-        restaurantPhoto.setImageDrawable(drawable);
-*/
         TextView restaurantName = (TextView) convertView.findViewById(
                 R.id.restaurant_name);
         TextView restaurantAddress = (TextView) convertView.findViewById(
