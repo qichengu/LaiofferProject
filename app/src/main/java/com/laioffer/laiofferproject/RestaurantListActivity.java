@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener, RestaurantGridFragment.OnItemSelectListener
+public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener//, RestaurantGridFragment.OnItemSelectListener
 {
 
     RestaurantListFragment listFragment;
@@ -21,14 +21,14 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
 
 
         //add list view
-        if (isTablet()) {
+        //if (isTablet()) {
             listFragment = new RestaurantListFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_list_container, listFragment).commit();
-        }
+        //}
 
         //add Gridview
-        gridFragment = new RestaurantGridFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_grid_container, gridFragment).commit();
+        //gridFragment = new RestaurantGridFragment();
+        //getSupportFragmentManager().beginTransaction().add(R.id.fragment_grid_container, gridFragment).commit();
     }
 
     private boolean isTablet() {
@@ -73,9 +73,9 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
         gridFragment.onItemSelected(position);
     }
 
-    @Override
+    /*@Override
     public void onItemSelectedGrid(int position){
         listFragment.onItemSelected(position);
-    }
+    }*/
 }
 
