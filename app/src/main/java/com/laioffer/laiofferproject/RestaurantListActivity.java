@@ -18,15 +18,26 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
 
     RestaurantListFragment listFragment;
     RestaurantMapFragment mapFragment;
-
+/*
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_restaurant_list_land);
+            getSupportFragmentManager().beginTransaction().hide(listFragment).commit();
+            getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_restaurant_list);
+            getSupportFragmentManager().beginTransaction().hide(listFragment).commit();
+            getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
 
     }
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +51,26 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
             setContentView(R.layout.activity_restaurant_list);
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
-
+        if (savedInstanceState == null) {
+            listFragment = new RestaurantListFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list_container, listFragment, "list_tag").commit();
+            mapFragment = new RestaurantMapFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_map_container, mapFragment, "map_tag").commit();
+        } else {
+            Toast.makeText(this, "find hidden instance", Toast.LENGTH_SHORT).show();
+            listFragment = (RestaurantListFragment) getSupportFragmentManager().findFragmentByTag("list_tag");
+            mapFragment = (RestaurantMapFragment) getSupportFragmentManager().findFragmentByTag("map_tag");
+        }
         //add list view
         //if (isTablet()) {
 
-        listFragment = new RestaurantListFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list_container, listFragment).commit();
+
+
 
         //}
 
         //add Gridview
-        mapFragment = new RestaurantMapFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_map_container, mapFragment).commit();
+
     }
 
     private boolean isTablet() {
