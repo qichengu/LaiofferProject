@@ -1,12 +1,17 @@
 package com.laioffer.laiofferproject;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class RestaurantListActivity extends AppCompatActivity implements RestaurantListFragment.OnItemSelectListener//, RestaurantGridFragment.OnItemSelectListener
 {
@@ -15,20 +20,38 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
     RestaurantMapFragment mapFragment;
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_list);
-
+        Configuration config = getResources().getConfiguration();
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_restaurant_list_land);
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (config.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_restaurant_list);
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
 
         //add list view
         //if (isTablet()) {
-            listFragment = new RestaurantListFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_list_container, listFragment).commit();
+
+        listFragment = new RestaurantListFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list_container, listFragment).commit();
+
         //}
 
         //add Gridview
         mapFragment = new RestaurantMapFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_map_container, mapFragment).commit();
     }
 
     private boolean isTablet() {

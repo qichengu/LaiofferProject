@@ -35,6 +35,7 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+
         LatLng toMark = new LatLng(0, 0);
         map.addMarker(new MarkerOptions().position(toMark).title("Marker"));
         map.moveCamera(CameraUpdateFactory.newLatLng(toMark));
@@ -76,6 +77,7 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     public void onItemSelected(String lat_log){
         String[] data = lat_log.split(",");
         LatLng toMark = new LatLng(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
+        map.clear();
         map.addMarker(new MarkerOptions().position(toMark).title("Marker"));
         map.moveCamera(CameraUpdateFactory.newLatLng(toMark));
         map.animateCamera(CameraUpdateFactory.zoomTo(number), 2000, null);
