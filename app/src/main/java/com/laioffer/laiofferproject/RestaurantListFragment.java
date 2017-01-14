@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -30,7 +32,7 @@ public class RestaurantListFragment extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnItemSelectListener {
-        public void onItemSelectedList(int position);
+        public void onItemSelectedList(String lat_log);
     }
 
     @Override
@@ -71,23 +73,28 @@ public class RestaurantListFragment extends Fragment {
         });
 */
         listView.setAdapter(new RestaurantAdapter(getActivity()));
-
+        //Context context = getApplicationContext();
         // Set a listener to ListView.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Restaurant r = (Restaurant) listView.getItemAtPosition(position);
+                String lat_log = new Double(r.getLat()).toString() + "," + new Double(r.getLng()).toString();
+                Log.e("lat log", lat_log);
+                mCallback.onItemSelectedList(lat_log);
+                //Toast.makeText( , new LatLng(r.getLat(), r.getLng())).toString(), Toast.LENGTH_SHORT).show();
                 //Create explicit intent to start map activity class
                 //Intent intent = new Intent(view.getContext(), RestaurantMapActivity.class);
                 //Prepare all the data we need to start map activity.
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(
-                        RestaurantMapActivity.EXTRA_LATLNG,
-                        new LatLng(r.getLat(), r.getLng()));
-                Intent intent = new Intent(view.getContext(), RestaurantMapActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                //Bundle bundle = new Bundle();
+                //bundle.putParcelable(
+                //        RestaurantMapActivity.EXTRA_LATLNG,
+                //        new LatLng(r.getLat(), r.getLng()));
+                //Intent intent = new Intent(view.getContext(), RestaurantMapActivity.class);
+                //intent.putExtras(bundle);
+                //startActivity(intent);
             }
         });
         return view;

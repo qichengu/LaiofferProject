@@ -12,7 +12,7 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
 {
 
     RestaurantListFragment listFragment;
-    RestaurantGridFragment gridFragment;
+    RestaurantMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
         //}
 
         //add Gridview
-        //gridFragment = new RestaurantGridFragment();
-        //getSupportFragmentManager().beginTransaction().add(R.id.fragment_grid_container, gridFragment).commit();
+        mapFragment = new RestaurantMapFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, mapFragment).commit();
     }
 
     private boolean isTablet() {
@@ -69,8 +69,8 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
     }
 
     @Override
-    public void onItemSelectedList(int position){
-        gridFragment.onItemSelected(position);
+    public void onItemSelectedList(String lat_log){
+        mapFragment.onItemSelected(lat_log);
     }
 
     /*@Override
