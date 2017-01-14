@@ -17,12 +17,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Calendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment {
     //ListView listView;
+
+    public static final String KEY_ITEM = "list_tag";
+    public static final String KEY_INDEX = "list_tag";
+    private String mTime;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -49,6 +55,15 @@ public class RestaurantListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+
+        /*if (savedInstanceState != null) {
+            // Restore last state
+            mTime = savedInstanceState.getString("time_key");
+        } else {
+            mTime = "" + Calendar.getInstance().getTimeInMillis();
+
+        }
+        */
         final ListView listView = (ListView) view.findViewById(R.id.restaurant_list);
         listView.setAdapter(new RestaurantAdapter(getActivity()));
         /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -79,7 +94,23 @@ public class RestaurantListFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*Log.e("list index", new Integer(position).toString());
+                Log.e("child count", new Integer(listView.getAdapter().getCount()).toString());
 
+                for(int i = 0; i < listView.getAdapter().getCount(); i++){
+                    if (position == i) {
+                        View wantedView = listView.getAdapter().getView(position, null, listView);
+                        wantedView.setBackgroundColor(Color.BLUE);
+                        Log.e("list index");
+
+
+                    } else {
+                        View wantedView = listView.getAdapter().getView(position, null, listView);
+                        wantedView.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                        Log.e("i = ", new Integer(i).toString());
+                    }
+                }
+*/
                 Restaurant r = (Restaurant) listView.getItemAtPosition(position);
                 String lat_log = new Double(r.getLat()).toString() + "," + new Double(r.getLng()).toString();
                 Log.e("lat log", lat_log);
@@ -108,14 +139,12 @@ public class RestaurantListFragment extends Fragment {
                 "Restaurant10"};
         return names;
     }
-    /*public void onItemSelected(int position){
-        for(int i = 0; i < listView.getChildCount(); i++){
-            if (position == i) {
-                listView.getChildAt(i).setBackgroundColor(Color.BLUE);
-            } else {
-                listView.getChildAt(i).setBackgroundColor(Color.parseColor("#EEEEEE"));
-            }
-        }
+
+    /*@Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("time_key", mTime);
     }*/
+
 
 }
