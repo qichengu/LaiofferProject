@@ -18,9 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class RestaurantMapActivity extends FragmentActivity implements OnMapReadyCallback {
     public final static String EXTRA_LATLNG = "EXTRA_LATLNG";
-    private int number = 10;
+    private int number = 8;
     private LatLng toMark;
     private MapFragment mapFragment;
+    private BroadcastReceiver mBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,8 @@ public class RestaurantMapActivity extends FragmentActivity implements OnMapRead
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("GOOGLEMAP_ZOOM");
-        this.registerReceiver(new ZoomMap(), filter);
+        mBroadcastReceiver = new ZoomMap();
+        this.registerReceiver(mBroadcastReceiver, filter);
 
     }
 

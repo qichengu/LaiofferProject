@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class RestaurantListFragment extends Fragment {
 
     private ListView listView;
     private DataService dataService;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,15 +117,22 @@ public class RestaurantListFragment extends Fragment {
     private class GetRestaurantsNearbyAsyncTask extends AsyncTask<Void, Void, List<Restaurant>> {
         private Fragment fragment;
         private DataService dataService;
-
+        private Clock clock;
         public GetRestaurantsNearbyAsyncTask(Fragment fragment, DataService dataService) {
             this.fragment = fragment;
             this.dataService = dataService;
+            this.clock = new Clock();
+            this.clock.reset();
         }
 
         @Override
         protected List<Restaurant> doInBackground(Void... params) {
-            return dataService.getNearbyRestaurants();
+            clock.start();
+            List<Restaurant> list = dataService.getNearbyRestaurants();
+            clock.stop();
+            Log.e("Latency", Long.toString(clock.getCurrentInterval()));
+            return list;
+            //return dataService.getNearbyRestaurants();
         }
 
         @Override
