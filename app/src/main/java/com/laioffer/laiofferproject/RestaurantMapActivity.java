@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class RestaurantMapActivity extends FragmentActivity implements OnMapReadyCallback {
     public final static String EXTRA_LATLNG = "EXTRA_LATLNG";
-    private int number = 1;
+    private int number = 10;
     private LatLng toMark;
     private MapFragment mapFragment;
     @Override

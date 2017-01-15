@@ -22,9 +22,10 @@ public class RestaurantAdapter extends BaseAdapter {
     Context context;
     List<Restaurant> restaurantData;
 
-    public RestaurantAdapter(Context context) {
+    public RestaurantAdapter(Context context, List<Restaurant> restaurantData) {
         this.context = context;
-        restaurantData = DataService.getRestaurantData();
+        //restaurantData = DataService.getRestaurantData();
+        this.restaurantData = restaurantData;
     }
 
     @Override
@@ -51,11 +52,11 @@ public class RestaurantAdapter extends BaseAdapter {
                     parent, false);
         }
 
-        ImageView restaurantPhoto = (ImageView) convertView.findViewById(R.id.restaurant_thumbnail);
-        restaurantPhoto.setBackgroundColor(Color.rgb(256/10*position, 0, 0));
+        //ImageView restaurantPhoto = (ImageView) convertView.findViewById(R.id.restaurant_thumbnail);
+        //restaurantPhoto.setBackgroundColor(Color.rgb(256/10*position, 0, 0));
         Resources res = context.getResources();
         int resID = res.getIdentifier("restaurant_thumbnail" + position , "drawable", context.getPackageName());
-        restaurantPhoto.setImageResource(resID);
+        //restaurantPhoto.setImageResource(resID);
 
         TextView restaurantName = (TextView) convertView.findViewById(
                 R.id.restaurant_name);
@@ -63,11 +64,18 @@ public class RestaurantAdapter extends BaseAdapter {
                 R.id.restaurant_address);
         TextView restaurantType = (TextView) convertView.findViewById(
                 R.id.restaurant_type);
+        ImageView restaurantThumbnail = (ImageView) convertView.findViewById(
+                R.id.restaurant_thumbnail);
+        ImageView restaurantRating = (ImageView) convertView.findViewById(
+                R.id.restaurant_rating);
 
         Restaurant r = restaurantData.get(position);
         restaurantName.setText(r.getName());
         restaurantAddress.setText(r.getAddress());
         restaurantType.setText(r.getType());
+        restaurantThumbnail.setImageBitmap(r.getThumbnail());
+        restaurantRating.setImageBitmap(r.getRating());
+
         return convertView;
     }
 }
