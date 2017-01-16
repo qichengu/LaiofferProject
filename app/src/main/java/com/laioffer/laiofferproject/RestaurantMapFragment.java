@@ -33,25 +33,26 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     public static final String KEY_ITEM = "map_tag";
     public static final String KEY_INDEX = "map_tag";
 
-    LatLng toMark;
-    private String mTime;
+    LatLng toMark = new LatLng(0, 0);
+    MapView mapView;
+    GoogleMap map;
+    int number = 1;
+    int init_number = 2;
 
     public RestaurantMapFragment() {
         // Required empty public constructor
     }
 
-    MapView mapView;
-    GoogleMap map;
-    int number = 1;
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        /*map.clear();
+        map.clear(); // to remove previous markers. This is not necessary when map is in another activity because the map is destroyed on activity exit.
+        // map.clear(); may overkill. have to reconstruct LatLng and zoom
         map.addMarker(new MarkerOptions().position(toMark).title("Marker"));
         map.moveCamera(CameraUpdateFactory.newLatLng(toMark));
         map.animateCamera(CameraUpdateFactory.zoomTo(number), 2000, null);
-        Log.e("Map Fragment", "OnMapReady");
-        */
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,12 +60,12 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
         // Inflate the layout for this fragment
         if (savedInstanceState != null) {
             // Restore last state
-            mTime = savedInstanceState.getString("time_key");
+            String mTime = savedInstanceState.getString("latlng_key");
             String[] doubles = mTime.split(",");
             toMark = new LatLng(Double.parseDouble(doubles[0]), Double.parseDouble(doubles[1]));
-        } else {
-            toMark = new LatLng(0, 0);
-            mTime = Double.toString(toMark.latitude) + "," + Double.toString(toMark.longitude);
+            String mZoom = savedInstanceState.getString("zoom_key");
+            number = Integer.parseInt(mZoom);
+            //Toast.makeText(getActivity(), mTime, Toast.LENGTH_SHORT).show();
         }
 
         View view = inflater.inflate(R.layout.fragment_restaurant_map, container, false);
@@ -101,11 +102,9 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
 
     public void onItemSelected(String lat_log){
         String[] data = lat_log.split(",");
-        LatLng toMark = new LatLng(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
-        map.clear();
-        map.addMarker(new MarkerOptions().position(toMark).title("Marker"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(toMark));
-        map.animateCamera(CameraUpdateFactory.zoomTo(number), 2000, null);
+        number = init_number;
+        toMark = new LatLng(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
+        mapView.getMapAsync(this);
     }
 
     @Override
@@ -138,6 +137,7 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("time_key", mTime);
+        outState.putString("latlng_key", Double.toString(toMark.latitude) + "," + Double.toString(toMark.longitude));
+        outState.putString("zoom_key", Integer.toString(number));
     }
 }

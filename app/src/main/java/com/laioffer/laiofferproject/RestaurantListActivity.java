@@ -46,10 +46,10 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_restaurant_list_land);
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
         } else if (config.orientation == Configuration.ORIENTATION_PORTRAIT){
             setContentView(R.layout.activity_restaurant_list);
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
         if (savedInstanceState == null) {
             listFragment = new RestaurantListFragment();
@@ -57,7 +57,7 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
             mapFragment = new RestaurantMapFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_map_container, mapFragment, "map_tag").commit();
         } else {
-            Toast.makeText(this, "find hidden instance", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "find hidden instance", Toast.LENGTH_SHORT).show();
             listFragment = (RestaurantListFragment) getSupportFragmentManager().findFragmentByTag("list_tag");
             mapFragment = (RestaurantMapFragment) getSupportFragmentManager().findFragmentByTag("map_tag");
         }
