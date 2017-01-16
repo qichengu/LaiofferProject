@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -41,7 +42,7 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
 
     MapView mapView;
     GoogleMap map;
-    int number = 4;
+    int number = 1;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -86,17 +87,18 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
         return view;
     }
 
-
     class ZoomMap extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 number = Integer.parseInt(extras.getString("ZOOM"));
+                //Toast.makeText(getActivity(), Integer.valueOf(number).toString(), Toast.LENGTH_SHORT).show();
                 mapView.getMapAsync(RestaurantMapFragment.this);
             }
         }
     }
+
     public void onItemSelected(String lat_log){
         String[] data = lat_log.split(",");
         LatLng toMark = new LatLng(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
