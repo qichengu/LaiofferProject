@@ -1,5 +1,9 @@
 package com.laioffer.laiofferproject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -58,6 +62,17 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
         return view;
     }
 
+
+    class ZoomMap extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                number = Integer.parseInt(extras.getString("ZOOM"));
+                mapView.getMapAsync(RestaurantMapFragment.this);
+            }
+        }
+    }
     public void onItemSelected(String lat_log){
         String[] data = lat_log.split(",");
         LatLng toMark = new LatLng(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
@@ -68,8 +83,11 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
 
     @Override
     public void onResume() {
-        mapView.onResume();
         super.onResume();
+        mapView.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("GOOGLEMAP_ZOOM");
+        getActivity().registerReceiver(new ZoomMap(), filter);
     }
 
     @Override
