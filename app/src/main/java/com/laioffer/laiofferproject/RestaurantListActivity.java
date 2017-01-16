@@ -3,6 +3,7 @@ package com.laioffer.laiofferproject;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -67,6 +68,33 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
 
 
 
+
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params) {
+                YelpApi yelp = new YelpApi();
+                yelp.searchForBusinessesByLocation("dinner", "San Francisco, CA", 20);
+                return null;
+            }
+        }.execute();
+
+/*
+        if (findViewById(R.id.fragment_list_container) != null) {
+            listFragment =  new RestaurantListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_list_container, listFragment).commit();
+        }
+
+        if (findViewById(R.id.fragment_map_container) != null) {
+            mapFragment =  new RestaurantMapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_map_container, mapFragment).commit();
+        }
+
+*/
+
+
+
         //}
 
         //add Gridview
@@ -111,8 +139,8 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
     }
 
     @Override
-    public void onItemSelectedList(String lat_log){
-        mapFragment.onItemSelected(lat_log);
+    public void onItemSelectedList(String lat_lng){
+        mapFragment.onItemSelected(lat_lng);
     }
 
     /*@Override

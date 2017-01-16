@@ -6,7 +6,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/image_missing"
-
         android:layout_weight="1" />
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,11 +18,15 @@
             android:layout_width="wrap_content"
             android:textStyle="bold"
             android:textSize="18sp"/>
+        <ImageView android:id="@+id/restaurant_rating"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_below="@id/restaurant_name"/>
 
         <TextView android:id="@+id/restaurant_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/restaurant_name"
+            android:layout_below="@id/restaurant_rating"
             android:textSize="13sp"/>
 
         <TextView android:id="@+id/restaurant_type"

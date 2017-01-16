@@ -36,8 +36,8 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     LatLng toMark = new LatLng(0, 0);
     MapView mapView;
     GoogleMap map;
-    int number = 1;
-    int init_number = 2;
+    int number = 8;
+    int init_number = 1;
 
     public RestaurantMapFragment() {
         // Required empty public constructor
