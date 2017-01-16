@@ -87,7 +87,6 @@ public class RestaurantListFragment extends Fragment {
     }
 
 
-
     @Override
     public void onStart() {
         super.onStart();

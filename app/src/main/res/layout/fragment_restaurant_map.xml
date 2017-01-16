@@ -1,10 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.laioffer.laiofferproject.RestaurantMapFragment">
-
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_zoom_in"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_zoom_out"
+        android:layout_toRightOf="@+id/button_zoom_in"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_fullscreen"
+        android:layout_toRightOf="@+id/button_zoom_out"/>
     <com.google.android.gms.maps.MapView android:id="@+id/restaurant_map"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-</FrameLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/button_zoom_in"/>
+</RelativeLayout>

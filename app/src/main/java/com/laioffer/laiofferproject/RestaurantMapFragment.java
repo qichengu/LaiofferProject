@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -37,7 +40,7 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     MapView mapView;
     GoogleMap map;
     int number = 8;
-    int init_number = 1;
+    int init_number = 4;
 
     public RestaurantMapFragment() {
         // Required empty public constructor
@@ -58,6 +61,9 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
         if (savedInstanceState != null) {
             // Restore last state
             String mTime = savedInstanceState.getString("latlng_key");
@@ -68,7 +74,81 @@ public class RestaurantMapFragment extends Fragment implements OnMapReadyCallbac
             //Toast.makeText(getActivity(), mTime, Toast.LENGTH_SHORT).show();
         }
 
-        View view = inflater.inflate(R.layout.fragment_restaurant_map, container, false);
+        final View view = inflater.inflate(R.layout.fragment_restaurant_map, container, false);
+        final Button button_zoom_in = (Button) view.findViewById(R.id.button_zoom_in);
+        button_zoom_in.setText("+");
+        button_zoom_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                //intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                intent.setAction("GOOGLEMAP_ZOOM");
+                intent.putExtra("ZOOM", "10");
+                getActivity().sendBroadcast(intent);
+                Toast.makeText(getActivity(), "sent zoom in", Toast.LENGTH_SHORT).show();
+            }
+        });
+        final Button button_zoom_out = (Button) view.findViewById(R.id.button_zoom_out);
+        button_zoom_out.setText("-");
+        button_zoom_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                //intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                intent.setAction("GOOGLEMAP_ZOOM");
+                intent.putExtra("ZOOM", "2");
+                getActivity().sendBroadcast(intent);
+                Toast.makeText(getActivity(), "sent zoom out", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final Button button_fullscreen = (Button) view.findViewById(R.id.button_fullscreen);
+        button_fullscreen.setText("[ ]");
+        button_fullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                class MyParcelable implements Parcelable {
+                    private int mData;
+
+                    public int describeContents() {
+                        return 0;
+                    }
+
+                    public void writeToParcel(Parcel out, int flags) {
+                        out.writeInt(mData);
+                    }
+
+                    public final Parcelable.Creator<MyParcelable> CREATOR
+                            = new Parcelable.Creator<MyParcelable>() {
+                        public MyParcelable createFromParcel(Parcel in) {
+                            return new MyParcelable(in);
+                        }
+
+                        public MyParcelable[] newArray(int size) {
+                            return new MyParcelable[size];
+                        }
+                    };
+
+                    private MyParcelable(Parcel in) {
+                        mData = in.readInt();
+                    }
+                }
+                        //Create explicit intent to start map activity class
+                Intent intent = new Intent(view.getContext(), RestaurantMapActivity.class);
+                //Prepare all the data we need to start map activity.
+                /*Bundle bundle = new Bundle();
+                bundle.putParcelable(
+                        RestaurantMapActivity.EXTRA_LATLNG,
+                        toMark);*/
+
+                //intent.putExtras(bundle);
+                intent.putExtra(RestaurantMapActivity.EXTRA_LATLNG, toMark);
+                intent.putExtra(RestaurantMapActivity.EXTRA_ZOOM, number);
+                startActivity(intent);
+            }
+        });
+
+
         mapView = (MapView) view.findViewById(R.id.restaurant_map);
         mapView.onCreate(savedInstanceState);
         if (mapView != null) {
