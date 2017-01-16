@@ -32,6 +32,8 @@ public class RestaurantListFragment extends Fragment {
     public static final String KEY_INDEX = "list_tag";
     private ListView listView;
     private DataService dataService;
+
+
     public RestaurantListFragment() {
         // Required empty public constructor
     }
@@ -101,15 +103,23 @@ public class RestaurantListFragment extends Fragment {
     private class GetRestaurantsNearbyAsyncTask extends AsyncTask<Void, Void, List<Restaurant>> {
         private Fragment fragment;
         private DataService dataService;
+        private Clock clock;
 
         public GetRestaurantsNearbyAsyncTask(Fragment fragment, DataService dataService) {
             this.fragment = fragment;
             this.dataService = dataService;
+            this.clock = new Clock();
+            this.clock.reset();
+
         }
 
         @Override
         protected List<Restaurant> doInBackground(Void... params) {
-            return dataService.getNearbyRestaurants();
+            clock.start();
+            List<Restaurant> list = dataService.getNearbyRestaurants();
+            clock.stop();
+            Log.e("Latency", Long.toString(clock.getCurrentInterval()));
+            return list;
         }
 
         @Override

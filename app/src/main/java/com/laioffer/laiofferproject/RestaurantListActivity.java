@@ -68,8 +68,8 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
 
 
 
-
-        new AsyncTask<Void, Void, Void>(){
+/* for testing purpose only */
+/*        new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... params) {
                 YelpApi yelp = new YelpApi();
@@ -77,6 +77,7 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
                 return null;
             }
         }.execute();
+*/
 
 /*
         if (findViewById(R.id.fragment_list_container) != null) {
