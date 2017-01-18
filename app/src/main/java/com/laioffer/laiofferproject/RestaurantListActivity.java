@@ -1,6 +1,7 @@
 package com.laioffer.laiofferproject;
 
 //import android.content.res.Configuration;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +27,12 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
         //if (isTablet()) {
 
 
-        if (findViewById(R.id.fragment_container) != null) {
+/*        if (findViewById(R.id.fragment_container) != null) {
             listFragment =  new RestaurantListFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_list_container, listFragment).commit();
         }
-
+*/
         //listFragment = new RestaurantListFragment();
         //    getSupportFragmentManager().beginTransaction().add(R.id.fragment_list_container, listFragment).commit();
         //}
@@ -48,11 +49,29 @@ public class RestaurantListActivity extends AppCompatActivity implements Restaur
                 return null;
             }
         }.execute();
+
+
+        /*
         if (findViewById(R.id.fragment_container) != null) {
             listFragment =  new RestaurantListFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, listFragment).commit();
         }
+        */
+
+
+        if (findViewById(R.id.fragment_container) != null) {
+            Intent intent = getIntent();
+            if (intent.getExtras() != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_list_container, new BackendListFragment()).commit();
+            } else {
+                listFragment =  new RestaurantListFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_list_container, listFragment).commit();
+            }
+        }
+
     }
 /*
     private boolean isTablet() {
